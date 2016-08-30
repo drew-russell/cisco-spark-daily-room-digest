@@ -10,17 +10,15 @@ from email.mime.text import MIMEText
 EMAIL_ADDRESS = ""
 EMAIL_PASSWORD = ""
 SPARK_PERSONAL_ACCESS_TOKEN = ""
-FROM_NAME = ''
+FROM_NAME = ""
 TO_EMAIL_ADDRESS = ""
 
 # Email (Gmail) Configuration
-
 smtp = smtplib.SMTP("smtp.gmail.com", 587)
 smtp.ehlo()
 smtp.starttls()
 smtp.ehlo()
 smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-
 
 # Cisco Spark
 SPARK_ROOM = requests.get("https://api.ciscospark.com/v1/rooms",
@@ -33,7 +31,6 @@ CURRENT_ROOMS = {}
 for room in RESULTS['items']:
     CURRENT_ROOMS.update({room['title']: room['lastActivity']})
 
-
 TODAY = str(datetime.today().date())
 
 EMAIL_MESSAGE = 'Todays Active Rooms:\n\n'
@@ -42,7 +39,6 @@ for room_title, lastActivity in CURRENT_ROOMS.items():
     if TODAY in lastActivity:
         EMAIL_MESSAGE += str('- ' + room_title)
         EMAIL_MESSAGE += '\n'
-
 
 # Send the Email
 body = MIMEText(EMAIL_MESSAGE)
